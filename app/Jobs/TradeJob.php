@@ -85,9 +85,9 @@ class TradeJob implements ShouldQueue
             ]);
 
             if($this->schedule->sequence == 'hourly') {
-                $this->schedule->next_schedule_at = $this->time->addHour();
+                $this->schedule->next_schedule_at = $this->time->addHour()->startOfHour()->addMinutes($this->schedule->minutes);
             } else {
-                $this->schedule->next_schedule_at = $this->time->addDay();
+                $this->schedule->next_schedule_at = $this->time->addDay()->startOfHour()->addMinutes($this->schedule->minutes);
             }
 
             $this->schedule->update();
