@@ -18,7 +18,7 @@
                                 <label for="symbol"> Symbol </label> <br>
                                 <select class="form-control" name="symbol" id="symbol " required>
                                     <option value="BTCUSDC"> BTC / USDC </option>
-                                    <option value="XRPUSDC"> XRP / USDC </option>
+                                    {{--<option value="XRPUSDC"> XRP / USDC </option>--}}
                                 </select>
                             </div>
 
@@ -116,7 +116,7 @@
                                     @if($schedule->sequence != 'hourly')
                                         {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('h:i a')  }}
                                     @else
-                                        **:{{$schedule->minutes}}
+                                         {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('i')  }} minute/s
                                     @endif
                                 </td>
                                 <td>
