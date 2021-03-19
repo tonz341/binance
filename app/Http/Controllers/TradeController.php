@@ -36,7 +36,7 @@ class TradeController extends Controller
         $schedules =  Schedule::where(function($q) use ($target_time, $sequence) {
             $q->where('time',$target_time, $sequence)
                 ->whereIn('sequence',$sequence);
-        })->orWhere('sequence','daily')
+            })->orWhere('sequence','hourly')
             ->where('minutes','<=', $target_min)
             ->where(function($q){
                 $q->where('next_schedule_at','<',now())
