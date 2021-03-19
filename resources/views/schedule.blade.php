@@ -107,7 +107,7 @@
 
                             @foreach($schedules as $schedule)
                             <tr>
-                                <td>{{ $schedule->symbol }}</td>
+                                <td>{{ $schedule->symbol }} <br> <small>{{ $schedule->next_schedule_at }}</small></td>
                                 <td>{{ $schedule->side }}</td>
                                 <td>{{ $schedule->amount }}</td>
                                 <td>{{ $schedule->sequence }}</td>
