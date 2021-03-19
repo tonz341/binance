@@ -59,6 +59,7 @@ class TradingBot extends Command
                     ->orWhereNull('next_schedule_at');
             })
             ->where('status',1)
+            ->limit(5)
             ->get();
 
 

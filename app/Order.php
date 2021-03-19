@@ -15,8 +15,7 @@ class Order extends Model
     public function getPriceAttribute()
     {
         try {
-            $full = json_decode($this->full_response);
-            return $full['origQty'];
+            return json_decode($this->full_response)->cummulativeQuoteQty;
         } catch (\Exception $e) {
             return 'N/A';
         }

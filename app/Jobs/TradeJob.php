@@ -63,19 +63,15 @@ class TradeJob implements ShouldQueue
 
         try {
             $api = new Binance\API($api,$secret);
-            $amount = (int)$this->schedule->amount;
-
-            info($this->schedule->side);
-            info($amount);
-            info($this->schedule->id);
-            info($this->schedule->symbol);
+            $price = $api->price("BTCUSDC");
+            $final_qty = round(($this->schedule->amount / $price),5);
 
             if($this->schedule->side == 'buy') {
                 info('triggered buy');
-                $order = $api->marketBuy($this->schedule->symbol, $amount);
+                $order = $api->marketBuy($this->schedule->symbol, $final_qty);
             } else {
                 info('triggered sell');
-                $order = $api->marketSell($this->schedule->symbol, $amount);
+                $order = $api->marketSell($this->schedule->symbol, $final_qty);
             }
 
             Order::create([

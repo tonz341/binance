@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home',['orders' => auth()->user()->orders ]);
+        return view('home',['orders' => auth()->user()->orders()->latest()->limit(20)->get() ]);
     }
 }
