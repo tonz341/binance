@@ -116,7 +116,7 @@
                                     @if($schedule->sequence != 'hourly')
                                         {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('h:i a')  }}
                                     @else
-                                        ---
+                                        **:{{$schedule->minutes}}
                                     @endif
                                 </td>
                                 <td>
