@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-sm">
                                 <label for="symbol"> Symbol </label> <br>
-                                <select name="symbol" id="symbol " required>
+                                <select class="form-control" name="symbol" id="symbol " required>
                                     <option value="BTCUSDC"> BTC / USDC </option>
                                     <option value="XRPUSDC"> XRP / USDC </option>
                                 </select>
@@ -24,7 +24,7 @@
 
                             <div class="col-sm">
                                 <label for="side "> Side </label> <br>
-                                <select name="side" id="side" required>
+                                <select class="form-control" name="side" id="side" required>
                                     <option value="buy"> Buy </option>
                                     <option value="sell"> Sell </option>
                                 </select>
@@ -32,12 +32,12 @@
 
                             <div class="col-sm">
                                 <label for="amount "> Amount </label> <br>
-                                <input type="number" value="" name="amount" required>
+                                <input class="form-control" type="number" value="" name="amount" required>
                             </div>
 
                             <div class="col-sm">
                                 <label for="sequence "> Sequence </label> <br>
-                                <select name="sequence" id="sequence" required>
+                                <select class="form-control" name="sequence" id="sequence" required>
                                     <option value="daily"> Daily </option>
                                     <option value="weekdays"> Weekdays </option>
                                     <option value="weekends"> Weekends </option>
@@ -46,7 +46,7 @@
 
                             <div class="col-sm">
                                 <label for="time "> Time </label> <br>
-                                <select name="time" id="time">
+                                <select class="form-control" name="time" id="time">
                                     <option value="0"> 12 am </option>
                                     <option value="1"> 1 am </option>
                                     <option value="2"> 2 am </option>
@@ -76,7 +76,7 @@
 
                             <div class="col-sm">
                                 <label for="minutes "> Min </label> <br>
-                                <select name="minutes" id="minutes">
+                                <select class="form-control" name="minutes" id="minutes">
                                     @for ($i = 0; $i < 60; $i++)
                                         <option value="{{ $i }}"> {{ $i  }} m </option>
                                     @endfor
@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="col-sm">
-                                <br>
+                                <label for="submit"> &nbsp; </label> <br>
                                 <button type="submit" class="btn btn-primary"> Set </button>
                             </div>
                         </div>
@@ -94,8 +94,8 @@
 
                     <div class="row">
 
-                        <table width="100%" border="1">
-                            <thead>
+                        <table  class="table">
+                            <thead class="thead-light">
                                 <th>Symbol</th>
                                 <th>Side</th>
                                 <th>Amount</th>

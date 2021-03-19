@@ -7,8 +7,8 @@
             <div class="card">
                 <div class="card-header">Orders History</div>
                 <div class="card-body">
-                    <table width="100%" border="1">
-                        <thead>
+                    <table  class="table">
+                        <thead class="thead-light">
                         <th>Order ID</th>
                         <th>Symbol</th>
                         <th>Side</th>
