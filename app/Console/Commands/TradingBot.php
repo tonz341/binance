@@ -63,7 +63,7 @@ class TradingBot extends Command
 
 
         foreach($schedules as $schedule) {
-            TradeJob::dispatch($schedule);
+            TradeJob::dispatch($schedule->id, $time);
         }
     }
 }
