@@ -84,7 +84,12 @@ class TradeJob implements ShouldQueue
                 "full_response" => json_encode($order),
             ]);
 
-            $this->schedule->next_schedule_at = $this->time->addDay();
+            if($this->schedule->sequence == 'hourly') {
+                $this->schedule->next_schedule_at = $this->time->addHour();
+            } else {
+                $this->schedule->next_schedule_at = $this->time->addDay();
+            }
+
             $this->schedule->update();
 
         } catch (\Exception $e) {

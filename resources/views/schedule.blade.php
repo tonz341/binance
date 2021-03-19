@@ -38,7 +38,8 @@
                             <div class="col-sm">
                                 <label for="sequence "> Sequence </label> <br>
                                 <select class="form-control" name="sequence" id="sequence" required>
-                                    <option value="daily"> Daily </option>
+                                    <option value="hourly"> Hourly </option>
+                                    <option value="daily" selected> Daily </option>
                                     <option value="weekdays"> Weekdays </option>
                                     <option value="weekends"> Weekends </option>
                                 </select>
@@ -111,8 +112,20 @@
                                 <td>{{ $schedule->side }}</td>
                                 <td>{{ $schedule->amount }}</td>
                                 <td>{{ $schedule->sequence }}</td>
-                                <td>{{ $schedule->time }} : {{ $schedule->minutes }}</td>
-                                <td>{{ $schedule->status }}</td>
+                                <td>
+                                    @if($schedule->sequence != 'hourly')
+                                        {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('h:i a')  }}
+                                    @else
+                                        ---
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($schedule->status)
+                                        Active
+                                    @else
+                                        Stop
+                                    @endif
+                                </td>
                                 <td>
 
                                     @if($schedule->status === 0)
