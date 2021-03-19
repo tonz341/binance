@@ -17,8 +17,8 @@
                             <div class="col-sm">
                                 <label for="symbol"> Symbol </label> <br>
                                 <select name="symbol" id="symbol " required>
-                                    <option value="XRPUSDC"> XRP / USDC </option>
                                     <option value="BTCUSDC"> BTC / USDC </option>
+                                    <option value="XRPUSDC"> XRP / USDC </option>
                                 </select>
                             </div>
 

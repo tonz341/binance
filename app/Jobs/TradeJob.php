@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Order;
 use App\Schedule;
 use App\User;
 use Illuminate\Bus\Queueable;
@@ -27,10 +28,9 @@ class TradeJob implements ShouldQueue
 
     public function __construct($schedule_id, $time)
     {
-        info('in');
+        info('Initializing job bot');
         $this->schedule = Schedule::find($schedule_id);
         $this->user = $this->schedule->user;
-
         $this->time = $time;
         //
     }
@@ -48,83 +48,45 @@ class TradeJob implements ShouldQueue
             return;
         }
 
+        if($this->schedule->next_schedule_at >  now()) {
+            info('this job is already done');
+            return;
+        }
+
         $api = $this->user->binance_api_key ? decrypt($this->user->binance_api_key) : null;
         $secret = $this->user->binance_secret ? decrypt($this->user->binance_secret) : null;
 
         if(!$api || !$secret) {
+            info('no api or secret===' . $this->user->id);
            return;
         }
 
         try {
             $api = new Binance\API($api,$secret);
-            info($api->price($this->schedule->symbol));
+            $amount = $this->schedule->amount;
+
+            if($this->schedule->side == 'buy') {
+                $order = $api->marketBuy($this->schedule->symbol, $amount);
+            } else {
+                $order = $api->marketSell($this->schedule->symbol, $amount);
+            }
+
+            Order::create([
+                'user_id' => $this->user->id,
+                'order_id' => $order['orderId'],
+                'symbol' => $order['symbol'],
+                'side' => $order['side'],
+                'status' => $order['status'],
+                "full_response" => json_encode($order),
+            ]);
+
+            $this->schedule->next_schedule_at = $this->time->addDay();
+            $this->schedule->update();
+
         } catch (\Exception $e) {
             info('Trading error'. $e->getMessage());
         }
 
-
-        $this->schedule->next_schedule_at = $this->time->addDay();
-        $this->schedule->update();
-//
-//
-//        $api = new Binance\API($api,$secret);
-//
-//        dd($api);
-//
-//
-//
-////        $price = $api->price("XRPUSDC");
-//
-////        dd(40 / $price);
-////        echo "Price of BNB: {$price} BTC.".PHP_EOL;
-//
-////        dd('hehe');
-//
-////        $ticker = $api->prices();
-//
-////        dd($ticker);
-//
-////        dd($price = $api->price("BTCUSDC"));
-//
-////        $depth = $api->depth("ETHBTC");
-//
-////        dd($depth);
-//
-//
-////        $price = $api->price("BTCUSDC");
-//
-////        dd($price);
-//
-//        $quantity = 40;
-//        $order = $api->marketSell("XRPUSDC", $quantity);
-//
-//        dd($order);
-//
-//
-////        $order = $api->marketBuy("BTCUSDC", $quantity);
-//
-//
-////        $quantity = 1;
-////        $price = 50;
-////
-////        $order = $api->buy("BTCUSDC", $quantity, $price);
-//
-//        dd($order);
-//
-////        $ticker = $api->prices();
-//
-//
-////        $balances = $api->balances($ticker);
-//
-////        dd($balances);
-//
-//
-////        $price = $api->price("BTCUSDC");
-////        $price = $api->price("USDCUSDT");
-//
-//        $price = $api->price("ETHBTC");
-//
-//        dd($price);
-
+        return;
     }
 }

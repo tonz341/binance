@@ -5,16 +5,30 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
+                <div class="card-header">Orders History</div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <table width="100%" border="1">
+                        <thead>
+                        <th>Order ID</th>
+                        <th>Symbol</th>
+                        <th>Side</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th >Created at </th>
+                        </thead>
 
-                    You are logged in!
+                        @foreach($orders as $order)
+                            <tr>
+                                <td>{{ $order->order_id }} <br></td>
+                                <td>{{ $order->symbol }}</td>
+                                <td>{{ $order->side }}</td>
+                                <td>{{ $order->price }}</td>
+                                <td>{{ $order->status }}</td>
+                                <td>{{ $order->created_at }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+
                 </div>
             </div>
         </div>

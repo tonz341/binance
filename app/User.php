@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function schedules(){
         return $this->hasMany(Schedule::class);
     }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }
