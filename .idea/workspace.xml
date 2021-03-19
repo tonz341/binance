@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="995e601b-aac4-428d-9562-b074792354f1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" afterPath="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Jobs/TradeJob.php" afterPath="$PROJECT_DIR$/app/Jobs/TradeJob.php" />
     </list>
     <ignored path="binance.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +27,7 @@
       <file leaf-file-name="TradeController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TradeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1487">
+            <state relative-caret-position="1827">
               <caret line="122" column="21" selection-start-line="61" selection-start-column="7" selection-end-line="122" selection-end-column="21" />
               <folding>
                 <element signature="e#40#57#0#PHP" expanded="true" />
@@ -80,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TradingBot.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TradingBot.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+            <state relative-caret-position="722">
+              <caret line="65" column="15" selection-start-line="65" selection-start-column="15" selection-end-line="65" selection-end-column="15" />
               <folding>
                 <element signature="e#40#62#0#PHP" expanded="true" />
               </folding>
@@ -92,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TradeJob.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TradeJob.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Jobs/TradeJob.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="67" column="43" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
+            <state relative-caret-position="527">
+              <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
               <folding>
                 <element signature="e#28#45#0#PHP" expanded="true" />
               </folding>
@@ -162,8 +162,8 @@
         <option value="$PROJECT_DIR$/app/Console/Kernel.php" />
         <option value="$PROJECT_DIR$/resources/views/schedule.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" />
-        <option value="$PROJECT_DIR$/app/Jobs/TradeJob.php" />
         <option value="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" />
+        <option value="$PROJECT_DIR$/app/Jobs/TradeJob.php" />
       </list>
     </option>
   </component>
@@ -538,12 +538,12 @@
       <option name="presentableId" value="Default" />
       <updated>1616033960427</updated>
       <workItem from="1616033961565" duration="19742000" />
-      <workItem from="1616118252991" duration="5356000" />
+      <workItem from="1616118252991" duration="5582000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25098000" />
+    <option name="totallyTimeSpent" value="25324000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="0" />
@@ -896,7 +896,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TradeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1487">
+        <state relative-caret-position="1827">
           <caret line="122" column="21" selection-start-line="61" selection-start-column="7" selection-end-line="122" selection-end-column="21" />
           <folding>
             <element signature="e#40#57#0#PHP" expanded="true" />
@@ -904,22 +904,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Jobs/TradeJob.php">
+    <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="67" column="43" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
+        <state relative-caret-position="722">
+          <caret line="65" column="15" selection-start-line="65" selection-start-column="15" selection-end-line="65" selection-end-column="15" />
           <folding>
-            <element signature="e#28#45#0#PHP" expanded="true" />
+            <element signature="e#40#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
+    <entry file="file://$PROJECT_DIR$/app/Jobs/TradeJob.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+        <state relative-caret-position="527">
+          <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
           <folding>
-            <element signature="e#40#62#0#PHP" expanded="true" />
+            <element signature="e#28#45#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

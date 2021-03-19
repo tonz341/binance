@@ -27,6 +27,7 @@ class TradeJob implements ShouldQueue
 
     public function __construct($schedule_id, $time)
     {
+        info('in');
         $this->schedule = Schedule::find($schedule_id);
         $this->user = $this->schedule->user;
 
@@ -43,6 +44,7 @@ class TradeJob implements ShouldQueue
     {
         //
         if(!$this->user) {
+            info('no user');
             return;
         }
 
