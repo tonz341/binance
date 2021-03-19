@@ -62,26 +62,7 @@ class TradingBot extends Command
 
 
         foreach($schedules as $schedule) {
-
-            try {
-                $user = $schedule->user;
-                $api = $user->binance_api_key ? decrypt($schedule->user->binance_api_key) : null;
-                $secret = $user->binance_secret ? decrypt($schedule->user->binance_secret) : null;
-
-                if($api && $secret) {
-                    $api = new Binance\API($api,$secret);
-                    info($api->price($schedule->symbol));
-                } else {
-                    info ('No binance key found');
-                }
-//
-                $schedule->next_schedule_at = now()->addDay();
-                $schedule->update();
-
-            } catch (\Exception $e) {
-                info('Trading error'. $e->getMessage());
-            }
-
+            TradingBot::dispatch($schedule);
         }
     }
 }

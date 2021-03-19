@@ -19,7 +19,7 @@ class TradeController extends Controller
         $time = now()->subHour(9);
 
 
-        dd($time->format('H'));
+        dd(now()->addDay()->subMinute(10)->format('his'));
 
 
         $time = now()->addHours(4);

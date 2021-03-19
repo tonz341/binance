@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="995e601b-aac4-428d-9562-b074792354f1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" afterPath="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/schedule.blade.php" afterPath="$PROJECT_DIR$/resources/views/schedule.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Jobs/TradeJob.php" afterPath="$PROJECT_DIR$/app/Jobs/TradeJob.php" />
     </list>
     <ignored path="binance.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +30,8 @@
       <file leaf-file-name="TradeController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TradeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+            <state relative-caret-position="1487">
+              <caret line="122" column="21" selection-start-line="61" selection-start-column="7" selection-end-line="122" selection-end-column="21" />
               <folding>
                 <element signature="e#40#57#0#PHP" expanded="true" />
               </folding>
@@ -84,8 +86,8 @@
       <file leaf-file-name="TradingBot.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="57" column="54" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
+            <state relative-caret-position="637">
+              <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
               <folding>
                 <element signature="e#40#57#0#PHP" expanded="true" />
               </folding>
@@ -93,12 +95,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="2021_03_18_134519_create_table_orders_log.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2021_03_18_134519_create_table_orders_log.php">
+      <file leaf-file-name="TradeJob.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Jobs/TradeJob.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
-              <folding />
+            <state relative-caret-position="629">
+              <caret line="67" column="43" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
+              <folding>
+                <element signature="e#28#45#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,11 +161,12 @@
         <option value="$PROJECT_DIR$/app/Schedule.php" />
         <option value="$PROJECT_DIR$/database/migrations/2021_03_19_084702_alter_schedule_table.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ScheduleController.php" />
         <option value="$PROJECT_DIR$/app/Console/Kernel.php" />
-        <option value="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" />
         <option value="$PROJECT_DIR$/resources/views/schedule.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" />
+        <option value="$PROJECT_DIR$/app/Jobs/TradeJob.php" />
+        <option value="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" />
       </list>
     </option>
   </component>
@@ -403,6 +408,24 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Jobs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="binance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="binance" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Http" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -518,12 +541,12 @@
       <option name="presentableId" value="Default" />
       <updated>1616033960427</updated>
       <workItem from="1616033961565" duration="19742000" />
-      <workItem from="1616118252991" duration="3593000" />
+      <workItem from="1616118252991" duration="5018000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23335000" />
+    <option name="totallyTimeSpent" value="24760000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="0" />
@@ -876,18 +899,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TradeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+        <state relative-caret-position="1487">
+          <caret line="122" column="21" selection-start-line="61" selection-start-column="7" selection-end-line="122" selection-end-column="21" />
           <folding>
             <element signature="e#40#57#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Jobs/TradeJob.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="67" column="43" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
+          <folding>
+            <element signature="e#28#45#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="57" column="54" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
+        <state relative-caret-position="637">
+          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
           <folding>
             <element signature="e#40#57#0#PHP" expanded="true" />
           </folding>
