@@ -51,7 +51,7 @@ class TradingBot extends Command
         $target_min = (int)$time->format('i');
 
         $schedules =  Schedule::where('time',$target_time)
-            ->where('minutes', '<', $target_min)
+            ->where('minutes', $target_min)
             ->whereIn('sequence',$sequence)
             ->where(function($q){
                 $q->where('next_schedule_at','<',now())
