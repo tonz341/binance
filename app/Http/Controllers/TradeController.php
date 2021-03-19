@@ -16,6 +16,12 @@ class TradeController extends Controller
     }
     public function buy(){
 
+        $time = now()->subHour(9);
+
+
+        dd($time->format('H'));
+
+
         $time = now()->addHours(4);
 
         if($day = $time->isWeekend()) {

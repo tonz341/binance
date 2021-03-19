@@ -41,8 +41,6 @@ class TradingBot extends Command
     {
         $time = now();
 
-        info('running');
-
         if($day = $time->isWeekend()) {
             $sequence = ['daily','weekends'];
         } else {
@@ -50,8 +48,10 @@ class TradingBot extends Command
         }
 
         $target_time = (int)$time->format('H');
+        $target_min = (int)$time->format('i');
 
         $schedules =  Schedule::where('time',$target_time)
+            ->where('minutes', '<', $target_min)
             ->whereIn('sequence',$sequence)
             ->where(function($q){
                 $q->where('next_schedule_at','<',now())
@@ -61,22 +61,26 @@ class TradingBot extends Command
 
 
         foreach($schedules as $schedule) {
-            info($schedule->time. '-'. $schedule->sequence);
-            
-            $user = $schedule->user;
 
-            $api = $user->binance_api_key ? decrypt($schedule->user->binance_api_key) : null;
-            $secret = $user->binance_secret ? decrypt($schedule->user->binance_secret) : null;
+            try {
+                $user = $schedule->user;
+                $api = $user->binance_api_key ? decrypt($schedule->user->binance_api_key) : null;
+                $secret = $user->binance_secret ? decrypt($schedule->user->binance_secret) : null;
 
-            if($api && $secret) {
-                $api = new Binance\API($api,$secret);
-                info($api->price($schedule->symbol));
-            } else {
-                info ('No binance found');
-            }
+                if($api && $secret) {
+                    $api = new Binance\API($api,$secret);
+                    info($api->price($schedule->symbol));
+                } else {
+                    info ('No binance key found');
+                }
 //
-            $schedule->next_schedule_at = now()->addDay();
-            $schedule->update();
+                $schedule->next_schedule_at = now()->addDay();
+                $schedule->update();
+
+            } catch (\Exception $e) {
+                info('Trading error'. $e->getMessage());
+            }
+
         }
     }
 }

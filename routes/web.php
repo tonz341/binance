@@ -19,11 +19,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/schedule', 'ScheduleController@index')->name('schedule');
-Route::post('/schedule/set', 'ScheduleController@set')->name('set');
 
-Route::get('/keys', 'KeyController@index')->name('keys');
-Route::post('/keys/set', 'KeyController@set')->name('keys_set');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/schedule', 'ScheduleController@index')->name('schedule');
+    Route::post('/schedule/set', 'ScheduleController@set')->name('set');
+    Route::post('/schedule/delete', 'ScheduleController@delete')->name('delete');
+    Route::post('/schedule/activate', 'ScheduleController@activate')->name('activate');
+    Route::post('/schedule/deactivate', 'ScheduleController@deactivate')->name('deactivate');
 
 
-Route::get('/buy', 'TradeController@buy')->name('buy');
+    Route::get('/keys', 'KeyController@index')->name('keys');
+    Route::post('/keys/set', 'KeyController@set')->name('keys_set');
+
+
+    Route::get('/buy', 'TradeController@buy')->name('buy');
+});
+
+

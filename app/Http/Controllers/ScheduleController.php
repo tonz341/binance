@@ -27,7 +27,32 @@ class ScheduleController extends Controller
             'amount' => $request->amount,
             'sequence' => $request->sequence,
             'time' => $request->time,
+            'minutes' => $request->minutes,
+            'status' => 1,
         ]);
+
+        return redirect('schedule');
+    }
+
+    public function delete(Request $request){
+        $sched = Schedule::find($request->id);
+        $sched->delete();
+
+        return redirect('schedule');
+    }
+
+    public function activate(Request $request){
+        $sched = Schedule::find($request->id);
+        $sched->status = 1;
+        $sched->update();
+
+        return redirect('schedule');
+    }
+
+    public function deactivate(Request $request){
+        $sched = Schedule::find($request->id);
+        $sched->status = 0;
+        $sched->update();
 
         return redirect('schedule');
     }

@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-sm">
                                 <label for="symbol"> Symbol </label> <br>
-                                <select name="symbol" id="symbol ">
+                                <select name="symbol" id="symbol " required>
                                     <option value="XRPUSDC"> XRP / USDC </option>
                                     <option value="BTCUSDC"> BTC / USDC </option>
                                 </select>
@@ -24,7 +24,7 @@
 
                             <div class="col-sm">
                                 <label for="side "> Side </label> <br>
-                                <select name="side" id="side">
+                                <select name="side" id="side" required>
                                     <option value="buy"> Buy </option>
                                     <option value="sell"> Sell </option>
                                 </select>
@@ -32,12 +32,12 @@
 
                             <div class="col-sm">
                                 <label for="amount "> Amount </label> <br>
-                                <input type="text" value="" name="amount">
+                                <input type="number" value="" name="amount" required>
                             </div>
 
                             <div class="col-sm">
                                 <label for="sequence "> Sequence </label> <br>
-                                <select name="sequence" id="sequence">
+                                <select name="sequence" id="sequence" required>
                                     <option value="daily"> Daily </option>
                                     <option value="weekdays"> Weekdays </option>
                                     <option value="weekends"> Weekends </option>
@@ -75,15 +75,22 @@
                             </div>
 
                             <div class="col-sm">
+                                <label for="minutes "> Min </label> <br>
+                                <select name="minutes" id="minutes">
+                                    @for ($i = 0; $i < 60; $i++)
+                                        <option value="{{ $i }}"> {{ $i  }} m </option>
+                                    @endfor
+                                </select>
+                            </div>
+
+                            <div class="col-sm">
                                 <br>
                                 <button type="submit" class="btn btn-primary"> Set </button>
                             </div>
                         </div>
                     </form>
 
-
                     <hr >
-
 
                     <div class="row">
 
@@ -93,7 +100,7 @@
                                 <th>Side</th>
                                 <th>Amount</th>
                                 <th>Sequence</th>
-                                <th>Time</th>
+                                <th >Time </th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </thead>
@@ -104,9 +111,31 @@
                                 <td>{{ $schedule->side }}</td>
                                 <td>{{ $schedule->amount }}</td>
                                 <td>{{ $schedule->sequence }}</td>
-                                <td>{{ $schedule->time }}</td>
+                                <td>{{ $schedule->time }} : {{ $schedule->minutes }}</td>
                                 <td>{{ $schedule->status }}</td>
-                                <td>  </td>
+                                <td>
+
+                                    @if($schedule->status === 0)
+                                        <form action="/schedule/activate" method="post">
+                                            {{ csrf_field()  }}
+                                            <input type="hidden" name="id" value="{{ $schedule->id }}">
+                                            <button type="submit" class="btn btn-success btn-sm"> Activate </button>
+                                        </form>
+                                    @else
+                                        <form action="/schedule/deactivate" method="post">
+                                            {{ csrf_field()  }}
+                                            <input type="hidden" name="id" value="{{ $schedule->id }}">
+                                            <button type="submit" class="btn btn-info btn-sm"> Deactivate </button>
+                                        </form>
+                                    @endif
+
+                                    <form action="/schedule/delete" method="post" style="margin-top: 5px">
+                                        {{ csrf_field()  }}
+                                        <input type="hidden" name="id" value="{{ $schedule->id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm"> Remove </button>
+                                    </form>
+
+                                </td>
                             </tr>
                             @endforeach
                         </table>
