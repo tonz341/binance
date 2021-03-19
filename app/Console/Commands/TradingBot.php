@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\TradeJob;
 use App\Schedule;
 use Illuminate\Console\Command;
 use Binance;
@@ -62,7 +63,7 @@ class TradingBot extends Command
 
 
         foreach($schedules as $schedule) {
-            TradingBot::dispatch($schedule);
+            TradeJob::dispatch($schedule);
         }
     }
 }

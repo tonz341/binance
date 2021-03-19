@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="995e601b-aac4-428d-9562-b074792354f1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" afterPath="$PROJECT_DIR$/app/Console/Commands/TradingBot.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/TradeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Jobs/TradeJob.php" afterPath="$PROJECT_DIR$/app/Jobs/TradeJob.php" />
     </list>
     <ignored path="binance.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,10 +83,10 @@
       <file leaf-file-name="TradingBot.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="637">
-              <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+            <state relative-caret-position="833">
+              <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
               <folding>
-                <element signature="e#40#57#0#PHP" expanded="true" />
+                <element signature="e#40#62#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -541,12 +538,12 @@
       <option name="presentableId" value="Default" />
       <updated>1616033960427</updated>
       <workItem from="1616033961565" duration="19742000" />
-      <workItem from="1616118252991" duration="5018000" />
+      <workItem from="1616118252991" duration="5356000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24760000" />
+    <option name="totallyTimeSpent" value="25098000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="0" />
@@ -661,7 +658,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#40#57#0#PHP" expanded="true" />
+            <element signature="e#40#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -919,10 +916,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Console/Commands/TradingBot.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+        <state relative-caret-position="833">
+          <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
           <folding>
-            <element signature="e#40#57#0#PHP" expanded="true" />
+            <element signature="e#40#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
