@@ -64,7 +64,7 @@ class TradeJob implements ShouldQueue
         try {
             $api = new Binance\API($api,$secret);
             $price = $api->price("BTCUSDC");
-            $final_qty = round(($this->schedule->amount / $price),5);
+            $final_qty = round($this->schedule->amount / $price, 6) + 0.000001;
 
             if($this->schedule->side == 'buy') {
                 info('triggered buy');
