@@ -60,10 +60,28 @@ class TradeJob implements ShouldQueue
             info('no api or secret===' . $this->user->id);
            return;
         }
+        
 
         try {
             $api = new Binance\API($api,$secret);
-            $price = $api->price("BTCUSDC");
+
+            if($this->schedule->side == 'buy') {
+                $ticker = $api->prices(); // Make sure you have an updated ticker object for this to work
+                $balances = $api->balances($ticker);
+                $available_balance = (float)$balances[config('wallet')['BTCUSDC']['currency']]['available'];
+
+                if($available_balance < $this->schedule->amount) {
+                    info('Not enough balance');
+                    $this->notes = 'Balance is not enough';
+                    $this->status = 0;
+                    $this->schedule->update();
+                    return;
+                }
+            }
+
+            //if balance is enough, then continue
+
+            $price = $api->price($this->schedule->symbol);
             $final_qty = round($this->schedule->amount / $price, 6) + 0.000001;
 
             if($this->schedule->side == 'buy') {
@@ -82,6 +100,7 @@ class TradeJob implements ShouldQueue
                 'side' => $order['side'],
                 'status' => $order['status'],
                 "full_response" => json_encode($order),
+                'schedule_id' => $this->schedule->id
             ]);
 
             if($this->schedule->sequence == 'hourly') {
@@ -90,6 +109,7 @@ class TradeJob implements ShouldQueue
                 $this->schedule->next_schedule_at = $this->time->addDay()->startOfHour()->addMinutes($this->schedule->minutes);
             }
 
+            $this->notes = 'Schedule has been sucessfully executed';
             $this->schedule->update();
 
         } catch (\Exception $e) {
