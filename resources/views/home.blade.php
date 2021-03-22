@@ -7,14 +7,14 @@
             <div class="card">
                 <div class="card-header">Orders History</div>
                 <div class="card-body">
-                    <table  class="table">
+                    <table  class="table-responsive">
                         <thead class="thead-light">
-                        <th>Order ID</th>
-                        <th>Symbol</th>
-                        <th>Side</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th >Created at </th>
+                        <th width="15%">Order ID</th>
+                        <th width="15%">Symbol</th>
+                        <th width="15%">Side</th>
+                        <th width="15%">Price</th>
+                        <th width="15%">Status</th>
+                        <th width="15%">Created</th>
                         </thead>
 
                         @foreach($orders as $order)
@@ -24,7 +24,7 @@
                                 <td>{{ $order->side }}</td>
                                 <td>{{ $order->price }}</td>
                                 <td>{{ $order->status }}</td>
-                                <td>{{ $order->created_at }}</td>
+                                <td>{{ $order->created_at->format('Y-m-d h:i:s a') }}</td>
                             </tr>
                         @endforeach
                     </table>

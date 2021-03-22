@@ -18,6 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        @media only screen and (max-device-width : 480px) {
+           table {
+               font-size: 9px;
+           }
+        }
+    </style>
+
 </head>
 <body>
     <div id="app">

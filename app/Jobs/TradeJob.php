@@ -58,6 +58,9 @@ class TradeJob implements ShouldQueue
 
         if(!$api || !$secret) {
             info('no api or secret===' . $this->user->id);
+            $this->notes = 'No binance key has been set';
+            $this->status = 0;
+            $this->schedule->update();
            return;
         }
         

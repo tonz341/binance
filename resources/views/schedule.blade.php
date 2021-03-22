@@ -108,7 +108,10 @@
 
                             @foreach($schedules as $schedule)
                             <tr>
-                                <td>{{ $schedule->symbol }} <br> <small>{{ $schedule->next_schedule_at }}</small></td>
+                                <td>{{ $schedule->symbol }} <br> <small>{{ $schedule->next_schedule_at ? $schedule->next_schedule_at->format('Y-m-d h:i:s a') : 'n/a' }}</small>
+                                    <br>
+                                    <small>Last note: {{ $schedule->notes }}</small>
+                                </td>
                                 <td>{{ $schedule->side }}</td>
                                 <td>{{ $schedule->amount }}</td>
                                 <td>{{ $schedule->sequence }}</td>
