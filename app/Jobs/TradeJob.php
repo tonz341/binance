@@ -49,7 +49,7 @@ class TradeJob implements ShouldQueue
         }
 
         if($this->schedule->next_schedule_at >  now()) {
-            info('this job is already done');
+            info('this job is already done sched = '. $this->schedule->id);
             return;
         }
 
