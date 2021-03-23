@@ -105,6 +105,7 @@ class TradeJob implements ShouldQueue
                 $order = $api->marketBuy($this->schedule->symbol, $final_qty);
             } else {
                 info('triggered sell');
+                info($final_qty);
                 $order = $api->marketSell($this->schedule->symbol, $final_qty);
             }
 
