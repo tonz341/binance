@@ -9,22 +9,21 @@
                 <div class="card-body">
                     <table  class="table-responsive">
                         <thead class="thead-light">
-                        <th width="15%">Order ID</th>
+                        <th width="25%">Order ID</th>
                         <th width="15%">Symbol</th>
-                        <th width="15%">Side</th>
-                        <th width="15%">Price</th>
-                        <th width="15%">Status</th>
-                        <th width="15%">Created</th>
+                        <th width="25%">BTC-Price</th>
+                        <th width="25%">Price</th>
+                        <th width="10%">Status</th>
                         </thead>
 
                         @foreach($orders as $order)
                             <tr>
-                                <td>{{ $order->order_id }} <br></td>
+                                <td>{{ $order->order_id }} <br> <small> {{ $order->created_at->format('Y-m-d h:i:s a') }} </small> </td>
                                 <td>{{ $order->symbol }}</td>
-                                <td>{{ $order->side }}</td>
-                                <td>{{ $order->price }}</td>
+                                <td>{{ $order->btc_price }}</td>
+                                <td>({{ $order->side }}){{ $order->price }}</td>
                                 <td>{{ $order->status }}</td>
-                                <td>{{ $order->created_at->format('Y-m-d h:i:s a') }}</td>
+                                <td></td>
                             </tr>
                         @endforeach
                     </table>
