@@ -136,7 +136,7 @@ class TradeJob implements ShouldQueue
 
     private function getFinalQty($wallet_configuration, $price){
 
-        $add_filler = $this->schedule->side == 'buy' ?  @$wallet_configuration['board_lot'] : 0;
+        $add_filler = $this->schedule->side == 'buy' ?  @$wallet_configuration['add_on_filler'] : 0;
 
         if($wallet_configuration['quantity_formula'] == 'divider') {
             return round($this->schedule->amount / $price,  @$wallet_configuration['board_lot']) + $add_filler;
