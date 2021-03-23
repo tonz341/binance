@@ -96,7 +96,8 @@ class TradeJob implements ShouldQueue
 
             //if balance is enough, then continue
             $price = $api->price($this->schedule->symbol);
-            $final_qty = round($this->schedule->amount / $price,  @$wallet_configuration['board_lot']) + @$wallet_configuration['add_on_filler'];
+            $final_qty = $this->getFinalQty($wallet_configuration, $price);
+
 
             if($this->schedule->side == 'buy') {
                 info('triggered buy');
@@ -131,5 +132,22 @@ class TradeJob implements ShouldQueue
         }
 
         return;
+    }
+
+    private function getFinalQty($wallet_configuration, $price){
+
+        $add_filler = $this->schedule->side == 'buy' ?  @$wallet_configuration['board_lot'] : 0;
+
+        if($wallet_configuration['quantity_formula'] == 'divider') {
+            return round($this->schedule->amount / $price,  @$wallet_configuration['board_lot']) + $add_filler;
+        }
+
+        if($wallet_configuration['quantity_formula'] == 'multiplier') {
+            return round($this->schedule->amount * $price, @$wallet_configuration['board_lot']);
+        }
+
+        return 0;
+//
+
     }
 }
