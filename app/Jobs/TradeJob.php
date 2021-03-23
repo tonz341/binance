@@ -59,7 +59,7 @@ class TradeJob implements ShouldQueue
         if(!$api || !$secret) {
             info('no api or secret===' . $this->user->id);
             $this->notes = 'No binance key has been set';
-            $this->status = 0;
+            $this->schedule->status = 0;
             $this->schedule->update();
            return;
         }
@@ -78,7 +78,7 @@ class TradeJob implements ShouldQueue
                     info('Not enough balance');
 
                     $this->schedule->notes = 'Balance is not enough';
-                    $this->status = 0;
+                    $this->schedule->status = 0;
                     $this->schedule->update();
                     return;
                 }
@@ -88,7 +88,7 @@ class TradeJob implements ShouldQueue
                     info('Not enough balance');
 
                     $this->schedule->notes = 'Balance is not enough';
-                    $this->status = 0;
+                    $this->schedule->status = 0;
                     $this->schedule->update();
                     return;
                 }

@@ -18,7 +18,7 @@
                                 <label for="symbol"> Symbol </label> <br>
                                 <select class="form-control" name="symbol" id="symbol " required>
                                     <option value="BTCUSDC"> BTC / USDC </option>
-                                    {{--<option value="XRPUSDC"> XRP / USDC </option>--}}
+                                    <option value="XRPBTC"> XRP / BTC </option>
                                 </select>
                             </div>
 
