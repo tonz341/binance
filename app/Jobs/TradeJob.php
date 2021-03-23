@@ -67,15 +67,27 @@ class TradeJob implements ShouldQueue
 
         try {
             $api = new Binance\API($api,$secret);
+            $ticker = $api->prices(); // Make sure you have an updated ticker object for this to work
+            $balances = $api->balances($ticker);
+
+            $wallet_configuration = config('wallet')[$this->schedule->symbol]; // bring up wallet configuration
 
             if($this->schedule->side == 'buy') {
-                $ticker = $api->prices(); // Make sure you have an updated ticker object for this to work
-                $balances = $api->balances($ticker);
-                $available_balance = (float)$balances[config('wallet')['BTCUSDC']['currency']]['available'];
-
+                $available_balance = (float)$balances[$wallet_configuration['buy_currency']]['available'];
                 if($available_balance < $this->schedule->amount) {
                     info('Not enough balance');
-                    $this->notes = 'Balance is not enough';
+
+                    $this->schedule->notes = 'Balance is not enough';
+                    $this->status = 0;
+                    $this->schedule->update();
+                    return;
+                }
+            } else {
+                $available_balance = (float)$balances[$wallet_configuration['sell_currency']]['available'];
+                if($available_balance < $this->schedule->amount) {
+                    info('Not enough balance');
+
+                    $this->schedule->notes = 'Balance is not enough';
                     $this->status = 0;
                     $this->schedule->update();
                     return;
@@ -83,9 +95,8 @@ class TradeJob implements ShouldQueue
             }
 
             //if balance is enough, then continue
-
             $price = $api->price($this->schedule->symbol);
-            $final_qty = round($this->schedule->amount / $price, 6) + 0.000001;
+            $final_qty = round($this->schedule->amount / $price,  @$wallet_configuration['board_lot']) + @$wallet_configuration['add_on_filler'];
 
             if($this->schedule->side == 'buy') {
                 info('triggered buy');
@@ -112,7 +123,7 @@ class TradeJob implements ShouldQueue
                 $this->schedule->next_schedule_at = $this->time->addDay()->startOfHour()->addMinutes($this->schedule->minutes);
             }
 
-            $this->notes = 'Schedule has been sucessfully executed';
+            $this->schedule->notes = 'Schedule has been successfully executed';
             $this->schedule->update();
 
         } catch (\Exception $e) {
