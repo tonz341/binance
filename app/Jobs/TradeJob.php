@@ -144,7 +144,7 @@ class TradeJob implements ShouldQueue
         }
 
         if($wallet_configuration['quantity_formula'] == 'multiplier') {
-            return round($this->schedule->amount * $price, @$wallet_configuration['board_lot']);
+            return $price;
         }
 
         return 0;
