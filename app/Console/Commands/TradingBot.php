@@ -52,9 +52,11 @@ class TradingBot extends Command
         $target_min = (int)$time->format('i');
 
         $schedules =  Schedule::where(function($q) use ($target_time, $sequence) {
-                $q->where('time',$target_time, $sequence)
-                    ->whereIn('sequence',$sequence);
-            })->orWhere('sequence','hourly')
+                $q->where(function($s_q) use ($target_time, $sequence){
+                    $s_q->where('time',$target_time, $sequence)
+                        ->whereIn('sequence',$sequence);
+                })->orWhere('sequence','hourly');
+            })
             ->where('minutes','<=', $target_min)
             ->where(function($q){
                 $q->where('next_schedule_at','<',now())
