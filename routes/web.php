@@ -28,6 +28,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/schedule/deactivate', 'ScheduleController@deactivate')->name('deactivate');
 
     Route::get('/schedule-btd', 'ScheduleBtdController@index')->name('schedule_btd');
+    Route::post('/schedule-btd/set', 'ScheduleBtdController@set')->name('set_btd');
+    Route::post('/schedule-btd/delete', 'ScheduleBtdController@delete')->name('delete_btd');
+    Route::post('/schedule-btd/activate', 'ScheduleBtdController@activate')->name('activate_btd');
+    Route::post('/schedule-btd/deactivate', 'ScheduleBtdController@deactivate')->name('deactivate_btd');
+
 
     Route::get('/keys', 'KeyController@index')->name('keys');
     Route::post('/keys/set', 'KeyController@set')->name('keys_set');

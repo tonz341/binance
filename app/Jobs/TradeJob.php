@@ -120,13 +120,27 @@ class TradeJob implements ShouldQueue
                 'type' => $this->schedule->type
             ]);
 
-            if($this->schedule->sequence == 'hourly') {
-                $this->schedule->next_schedule_at = $this->time->addHour()->startOfHour()->addMinutes($this->schedule->minutes);
+
+            if($this->schedule->type == 'BTD') {
+                if($this->schedule->sequence == 'hourly') {
+                    $this->schedule->next_schedule_at = now()->addHour();
+                } else if($this->schedule->sequence == 'daily') {
+                    $this->schedule->next_schedule_at = now()->addDay();
+                } else if($this->schedule->sequence == 'weekly') {
+                    $this->schedule->next_schedule_at = now()->addWeek();
+                } else {
+                    $this->schedule->next_schedule_at = now()->addMinutes(30);
+                }
+                $this->schedule->notes = 'Trigger has been successfully executed';
             } else {
-                $this->schedule->next_schedule_at = $this->time->addDay()->startOfHour()->addMinutes($this->schedule->minutes);
+                if($this->schedule->sequence == 'hourly') {
+                    $this->schedule->next_schedule_at = $this->time->addHour()->startOfHour()->addMinutes($this->schedule->minutes);
+                } else {
+                    $this->schedule->next_schedule_at = $this->time->addDay()->startOfHour()->addMinutes($this->schedule->minutes);
+                }
+                $this->schedule->notes = 'Schedule has been successfully executed';
             }
 
-            $this->schedule->notes = 'Schedule has been successfully executed';
             $this->schedule->update();
 
         } catch (\Exception $e) {

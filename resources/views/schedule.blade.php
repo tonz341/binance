@@ -5,14 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Schedule - <strong>DCA</strong></div>
-
+                <div class="card-header"><strong>[DCA]</strong> Schedules</div>
                 <div class="card-body">
-
                     <form action="/schedule/set" method="post">
-
                          {{ csrf_field()  }}
-
                         <div class="row">
                             <div class="col-sm">
                                 <label for="symbol"> Symbol </label> <br>
@@ -90,69 +86,74 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
 
-                    <hr >
+            <br>
 
+            <div class="card">
+                <div class="card-header"><strong>[DCA]</strong> Schedules</div>
+                <div class="card-body">
                     <div class="row">
 
                         <table  class="table">
                             <thead class="thead-light">
-                                <th>Symbol</th>
-                                <th>Side</th>
-                                <th>Amount</th>
-                                <th>Sequence</th>
-                                <th >Time </th>
-                                <th>Status</th>
-                                <th>Action</th>
+                            <th>Symbol</th>
+                            <th>Side</th>
+                            <th>Amount</th>
+                            <th>Sequence</th>
+                            <th >Time </th>
+                            <th>Status</th>
+                            <th>Action</th>
                             </thead>
 
                             @foreach($schedules as $schedule)
-                            <tr>
-                                <td>{{ $schedule->symbol }} <br> <small>{{ $schedule->next_schedule_at }}</small>
-                                    <br>
-                                    <small>Last note: {{ $schedule->notes }}</small>
-                                </td>
-                                <td>{{ $schedule->side }}</td>
-                                <td>{{ $schedule->amount }}</td>
-                                <td>{{ $schedule->sequence }}</td>
-                                <td>
-                                    @if($schedule->sequence != 'hourly')
-                                        {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('h:i a')  }}
-                                    @else
-                                         {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('i')  }} minute/s
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($schedule->status)
-                                        Active
-                                    @else
-                                        Stop
-                                    @endif
-                                </td>
-                                <td>
+                                <tr>
+                                    <td>{{ $schedule->symbol }} <br> <small>{{ $schedule->next_schedule_at }}</small>
+                                        <br>
+                                        <small>Last note: {{ $schedule->notes }}</small>
+                                    </td>
+                                    <td>{{ $schedule->side }}</td>
+                                    <td>{{ $schedule->amount }}</td>
+                                    <td>{{ $schedule->sequence }}</td>
+                                    <td>
+                                        @if($schedule->sequence != 'hourly')
+                                            {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('h:i a')  }}
+                                        @else
+                                            {{ \Carbon\Carbon::parse($schedule->time.':'.$schedule->minutes)->format('i')  }} minute/s
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($schedule->status)
+                                            Active
+                                        @else
+                                            Stop
+                                        @endif
+                                    </td>
+                                    <td>
 
-                                    @if($schedule->status === 0)
-                                        <form action="/schedule/activate" method="post">
+                                        @if($schedule->status === 0)
+                                            <form action="/schedule/activate" method="post">
+                                                {{ csrf_field()  }}
+                                                <input type="hidden" name="id" value="{{ $schedule->id }}">
+                                                <button type="submit" class="btn btn-success btn-sm"> Activate </button>
+                                            </form>
+                                        @else
+                                            <form action="/schedule/deactivate" method="post">
+                                                {{ csrf_field()  }}
+                                                <input type="hidden" name="id" value="{{ $schedule->id }}">
+                                                <button type="submit" class="btn btn-info btn-sm"> Deactivate </button>
+                                            </form>
+                                        @endif
+
+                                        <form action="/schedule/delete" method="post" style="margin-top: 5px">
                                             {{ csrf_field()  }}
                                             <input type="hidden" name="id" value="{{ $schedule->id }}">
-                                            <button type="submit" class="btn btn-success btn-sm"> Activate </button>
+                                            <button type="submit" class="btn btn-danger btn-sm"> Remove </button>
                                         </form>
-                                    @else
-                                        <form action="/schedule/deactivate" method="post">
-                                            {{ csrf_field()  }}
-                                            <input type="hidden" name="id" value="{{ $schedule->id }}">
-                                            <button type="submit" class="btn btn-info btn-sm"> Deactivate </button>
-                                        </form>
-                                    @endif
 
-                                    <form action="/schedule/delete" method="post" style="margin-top: 5px">
-                                        {{ csrf_field()  }}
-                                        <input type="hidden" name="id" value="{{ $schedule->id }}">
-                                        <button type="submit" class="btn btn-danger btn-sm"> Remove </button>
-                                    </form>
-
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             @endforeach
                         </table>
                     </div>
