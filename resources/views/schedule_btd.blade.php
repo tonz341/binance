@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Schedule - <strong>DCA</strong></div>
+                <div class="card-header">Schedule - <strong> BTD </strong></div>
 
                 <div class="card-body">
 
@@ -86,7 +86,7 @@
 
                             <div class="col-sm">
                                 <label for="submit"> &nbsp; </label> <br>
-                                <button type="submit" class="btn btn-primary"> Set </button>
+                                {{--<button type="submit" class="btn btn-primary"> Set </button>--}}
                             </div>
                         </div>
                     </form>

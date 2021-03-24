@@ -38,7 +38,11 @@ class User extends Authenticatable
     ];
 
     public function schedules(){
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class)->where('type','DCA');
+    }
+
+    public function schedules_btd(){
+        return $this->hasMany(Schedule::class)->where('type','BTD');
     }
 
     public function orders(){

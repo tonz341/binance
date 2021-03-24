@@ -63,8 +63,13 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('schedule') }}"> Schedules </a>
+                                <a class="nav-link" href="{{ route('schedule') }}"> DCA </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('schedule_btd') }}"> BTD </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('keys') }}"> Keys </a>
                             </li>

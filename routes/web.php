@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/schedule/activate', 'ScheduleController@activate')->name('activate');
     Route::post('/schedule/deactivate', 'ScheduleController@deactivate')->name('deactivate');
 
+    Route::get('/schedule-btd', 'ScheduleBtdController@index')->name('schedule_btd');
 
     Route::get('/keys', 'KeyController@index')->name('keys');
     Route::post('/keys/set', 'KeyController@set')->name('keys_set');

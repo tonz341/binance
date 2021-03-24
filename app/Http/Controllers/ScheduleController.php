@@ -13,7 +13,6 @@ class ScheduleController extends Controller
 {
 
     public function index(){
-
         $schedules = auth()->user()->schedules;
         return view('schedule', ['schedules' => $schedules]);
     }

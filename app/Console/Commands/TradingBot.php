@@ -62,6 +62,7 @@ class TradingBot extends Command
                 $q->where('next_schedule_at','<',now())
                     ->orWhereNull('next_schedule_at');
             })
+            ->where('type','DCA')
             ->where('status',1)
             ->limit(5)
             ->get();
