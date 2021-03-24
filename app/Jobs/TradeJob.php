@@ -116,7 +116,8 @@ class TradeJob implements ShouldQueue
                 'side' => $order['side'],
                 'status' => $order['status'],
                 "full_response" => json_encode($order),
-                'schedule_id' => $this->schedule->id
+                'schedule_id' => $this->schedule->id,
+                'type' => $this->schedule->type
             ]);
 
             if($this->schedule->sequence == 'hourly') {
