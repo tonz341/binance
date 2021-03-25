@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('trading:bot')->everyMinute();
          $schedule->command('prices:ping')->hourly();
+
+        $schedule->command('trading:btd')->everyFiveMinutes();
     }
 
     /**
