@@ -58,6 +58,7 @@
                                 </li>
                             @endif
                         @else
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}"> Home </a>
                             </li>
@@ -68,6 +69,10 @@
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('schedule_btd') }}"> BTD </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('price') }}"> Prices </a>
                             </li>
 
                             <li class="nav-item">
