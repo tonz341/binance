@@ -36,11 +36,11 @@ class ScheduleBtdGrouper implements ShouldQueue
     public function handle()
     {
         $schedules =  Schedule::where('trigger_percentage','>',$this->percentage)
-            ->where('window_hour',$this->window_hour)
-            ->where(function($q){
-                $q->where('next_schedule_at','<',now())
-                    ->orWhereNull('next_schedule_at');
-            })
+            ->where('window_hour','<=',$this->window_hour)
+//            ->where(function($q){
+//                $q->where('next_schedule_at','<',now())
+//                    ->orWhereNull('next_schedule_at');
+//            })
             ->where('type','BTD')
             ->where('status',1)
             ->limit(20)
