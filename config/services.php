@@ -34,4 +34,8 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    'tp_api' => [
+        'key' => env('TP_API_KEY'),
+    ],
+
 ];

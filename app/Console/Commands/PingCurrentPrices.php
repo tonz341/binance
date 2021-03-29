@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Price;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Binance;
 
@@ -52,12 +53,40 @@ class PingCurrentPrices extends Command
             Price::firstOrCreate([
                 'symbol' => $currency,
                 'price' => $price,
-                'created_at' => now()->startOfHour()
+                'created_at' => now()->startOfHour(),
+                'rsi_14_1d' => $this->getRsiValue('1h',14)
             ], [
                 'symbol' => $currency,
                 'price' => $price,
                 'created_at' => now()->startOfHour()
             ]);
         }
+    }
+
+    public function getRsiValue($interval='1h',$period=14){
+
+        try {
+            $taapi = config('services.tp_api.key');
+            $endpoint = 'rsi';
+
+            $query = http_build_query(array(
+                'secret' => $taapi,
+                'exchange' => 'binance',
+                'symbol' => 'BTC/USDC',
+                'interval' => $interval,
+                'optInTimePeriod' => $period // level
+            ));
+
+            $url = "https://api.taapi.io/{$endpoint}?{$query}";
+
+            $client = new Client();
+            $response = $client->get($url);
+            $value = \GuzzleHttp\json_decode($response->getBody()->getContents())->value;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+            return 0;
+        }
+
+        return $value;
     }
 }

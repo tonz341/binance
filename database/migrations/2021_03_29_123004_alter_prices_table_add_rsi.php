@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterScheduleNotesTable extends Migration
+class AlterPricesTableAddRsi extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class AlterScheduleNotesTable extends Migration
      */
     public function up()
     {
-        Schema::table('schedules', function (Blueprint $table) {
-            $table->text('notes')->nullable();
+        Schema::table('prices', function (Blueprint $table) {
+            $table->float('rsi_14_1d')->after('symbol')->nullable();
         });
 
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedInteger('schedule_id')->nullable();
+            $table->float('btc_price')->nullable();
         });
     }
 
@@ -29,12 +29,12 @@ class AlterScheduleNotesTable extends Migration
      */
     public function down()
     {
-        Schema::table('schedules', function (Blueprint $table) {
-            $table->dropColumn('notes');
+        Schema::table('prices', function (Blueprint $table) {
+            $table->dropColumn('rsi_14_1d');
         });
 
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('schedule_id');
+            $table->dropColumn('btc_price');
         });
     }
 }

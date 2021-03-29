@@ -117,7 +117,8 @@ class TradeJob implements ShouldQueue
                 'status' => $order['status'],
                 "full_response" => json_encode($order),
                 'schedule_id' => $this->schedule->id,
-                'type' => $this->schedule->type
+                'type' => $this->schedule->type,
+                'btc_price' => $price
             ]);
 
 
