@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\ScheduleBtdGrouper;
+use App\Jobs\ScheduleRsiGrouper;
 use App\Jobs\TradeJob;
 use App\Price;
 use App\User;
@@ -58,19 +59,36 @@ class TradingBotBtd extends Command
             }
 
             $percentage =  100 - (($old_price->price / $price) * 100); // get percentage difference vs price in window hour last time
-            ScheduleBtdGrouper::dispatch($percentage, $window_hour);
+
+            try {
+                ScheduleBtdGrouper::dispatch($percentage, $window_hour);
+            } catch (\Exception $e) {
+                info('Error BTD -'. $e->getMessage());
+            }
         }
 
+//        $interval = '1h';
+//        $period = 14;
+//
+//        $rsi = $this->getRsiValue($interval,$period);
+//
+//        try {
+//            ScheduleRsiGrouper::dispatch($rsi,$interval, $period, $price);
+//        } catch (\Exception $e) {
+//            info('Error RSI -'. $e->getMessage());
+//        }
 
-        Price::firstOrCreate([
-            'symbol' => 'BTCUSDC',
-            'price' => $price,
-            'created_at' => now()->startOfHour(),
-            'rsi_14_1d' => $this->getRsiValue('1h',14)
-        ], [
-            'symbol' =>'BTCUSDC',
-            'created_at' => now()->startOfHour()
-        ]);
+
+        $tb_price = Price::where('created_at',now()->startOfHour())->first();
+
+        if(!$tb_price) {
+            Price::create([
+                'symbol' => 'BTCUSDC',
+                'price' => $price,
+                'created_at' => now()->startOfHour(),
+                'rsi_14_1d' => $this->getRsiValue('1h',14)
+            ]);
+        }
     }
 
 
