@@ -6,6 +6,7 @@ use App\Jobs\ScheduleBtdGrouper;
 use App\Jobs\TradeJob;
 use App\Price;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
 use App\Schedule;
