@@ -25,13 +25,15 @@ class TradeJobRsi implements ShouldQueue
     protected $user;
     protected $schedule;
     protected $price;
+    protected $rsi;
 
-    public function __construct($schedule_id, $price)
+    public function __construct($schedule_id, $price, $rsi)
     {
         info('Initializing job bot - RSI');
         $this->schedule = Schedule::find($schedule_id);
         $this->user = $this->schedule->user;
         $this->price = $price;
+        $this->rsi = $rsi;
         //
     }
 
@@ -92,6 +94,14 @@ class TradeJobRsi implements ShouldQueue
             $final_qty = $this->getFinalQty($wallet_configuration, $price);
 
             if($this->schedule->side == 'buy') {
+
+                if($this->rsi > $this->schedule->rsi) {
+//                    dont do anything just add cooldown
+                    $this->schedule->next_schedule_at = now()->addMinutes(5);
+                    $this->schedule->update();
+                    return;
+                }
+
                 $order = $api->marketBuy($this->schedule->symbol, $final_qty);
 
                 $this->schedule->average_price = $price;
@@ -107,7 +117,9 @@ class TradeJobRsi implements ShouldQueue
 
                 $percentage =  100 - (($this->schedule->average_price / $price) * 100); // get percentage difference vs price in window hour last time
                 if($percentage < $this->schedule->target_sell) {
-//                    dont do anything
+//                    dont do anything just add cooldown
+                    $this->schedule->next_schedule_at = now()->addMinutes(5);
+                    $this->schedule->update();
                     return;
                 }
 

@@ -39,8 +39,7 @@ class ScheduleRsiGrouper implements ShouldQueue
      */
     public function handle()
     {
-        $schedules =  Schedule::where('rsi','>=',$this->rsi)
-            ->where('rsi_period',$this->period)
+        $schedules =  Schedule::where('rsi_period',$this->period)
             ->where('rsi_interval',$this->interval)
             ->where('type','RSI')
             ->where('status',1)
@@ -49,7 +48,7 @@ class ScheduleRsiGrouper implements ShouldQueue
 
         foreach($schedules as $schedule) {
             info('RSI hit'.$schedule->id);
-            TradeJobRsi::dispatch($schedule->id, $this->price);
+            TradeJobRsi::dispatch($schedule->id, $this->price, $this->rsi);
         }
     }
 }
