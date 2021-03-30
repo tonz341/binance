@@ -5,7 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><strong>[AUTO-RSI]</strong> Create</div>
+                <div class="card-header"><strong>[AUTO-RSI]</strong> Create
+
+                    <span class="float-right">
+                        <small>
+                          <strong>BTC:</strong>  {{ $rsi->price }} &nbsp; | &nbsp;
+                          <strong>RSI-1h-14: </strong>  {{ $rsi->rsi_14_1d }}  &nbsp; | &nbsp;
+                          <strong>Last: </strong>  {{ $rsi->created_at }}
+                        </small>
+                    </span>
+
+                </div>
                 <div class="card-body">
                     <form action="/schedule-rsi/set" method="post">
                          {{ csrf_field()  }}
@@ -83,7 +93,7 @@
             <br>
 
             <div class="card">
-                <div class="card-header"><strong>[AUTO-RSI]</strong> Schedules</div>
+                <div class="card-header"><strong>[AUTO-RSI]</strong> Schedules </div>
                 <div class="card-body">
                     <div class="row">
                         <table  class="table">

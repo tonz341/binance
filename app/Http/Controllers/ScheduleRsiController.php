@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleSetRequest;
+use App\Price;
 use App\Schedule;
 use Binance;
 use Illuminate\Http\Request;
@@ -14,7 +15,10 @@ class ScheduleRsiController extends Controller
 
     public function index(){
         $schedules = auth()->user()->schedules_rsi;
-        return view('schedule_rsi', ['schedules' => $schedules]);
+
+        $rsi = Price::latest()->first();
+
+        return view('schedule_rsi', ['schedules' => $schedules, 'rsi' => $rsi]);
     }
 
     public function set(Request $request){

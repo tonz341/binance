@@ -39,7 +39,7 @@ class ScheduleRsiGrouper implements ShouldQueue
      */
     public function handle()
     {
-        $schedules =  Schedule::where('rsi','<=',$this->rsi)
+        $schedules =  Schedule::where('rsi','>=',$this->rsi)
             ->where('rsi_period',$this->period)
             ->where('rsi_interval',$this->interval)
             ->where('type','RSI')
