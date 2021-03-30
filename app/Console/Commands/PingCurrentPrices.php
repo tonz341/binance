@@ -49,17 +49,16 @@ class PingCurrentPrices extends Command
 
         foreach ($currencies as $currency) {
             $price = $api->price($currency);
+            $tb_price = Price::where('created_at',now()->startOfHour())->first();
 
-            Price::firstOrCreate([
-                'symbol' => $currency,
-                'price' => $price,
-                'created_at' => now()->startOfHour(),
-                'rsi_14_1d' => $this->getRsiValue('1h',14)
-            ], [
-                'symbol' => $currency,
-                'price' => $price,
-                'created_at' => now()->startOfHour()
-            ]);
+            if(!$tb_price) {
+                Price::create([
+                    'symbol' => $currency,
+                    'price' => $price,
+                    'created_at' => now()->startOfHour(),
+                    'rsi_14_1h' => $this->getRsiValue('1h',14)
+                ]);
+            }
         }
     }
 
