@@ -45,6 +45,10 @@ class User extends Authenticatable
         return $this->hasMany(Schedule::class)->where('type','BTD');
     }
 
+    public function schedules_rsi(){
+        return $this->hasMany(Schedule::class)->where('type','RSI');
+    }
+
     public function orders(){
         return $this->hasMany(Order::class);
     }

@@ -35,6 +35,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/schedule-btd/activate', 'ScheduleBtdController@activate')->name('activate_btd');
     Route::post('/schedule-btd/deactivate', 'ScheduleBtdController@deactivate')->name('deactivate_btd');
 
+    Route::get('/schedule-rsi', 'ScheduleRsiController@index')->name('schedule_rsi');
+    Route::post('/schedule-rsi/set', 'ScheduleRsiController@set')->name('set_rsi');
+    Route::post('/schedule-rsi/delete', 'ScheduleRsiController@delete')->name('delete_rsi');
+    Route::post('/schedule-rsi/activate', 'ScheduleRsiController@activate')->name('activate_rsi');
+    Route::post('/schedule-rsi/deactivate', 'ScheduleRsiController@deactivate')->name('deactivate_rsi');
+
 
     Route::get('/keys', 'KeyController@index')->name('keys');
     Route::post('/keys/set', 'KeyController@set')->name('keys_set');

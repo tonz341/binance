@@ -72,6 +72,10 @@
                             </li>
 
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('schedule_rsi') }}"> RSI </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('price') }}"> Prices </a>
                             </li>
 

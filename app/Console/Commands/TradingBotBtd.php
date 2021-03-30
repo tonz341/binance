@@ -67,16 +67,16 @@ class TradingBotBtd extends Command
             }
         }
 
-//        $interval = '1h';
-//        $period = 14;
-//
-//        $rsi = $this->getRsiValue($interval,$period);
-//
-//        try {
-//            ScheduleRsiGrouper::dispatch($rsi,$interval, $period, $price);
-//        } catch (\Exception $e) {
-//            info('Error RSI -'. $e->getMessage());
-//        }
+        $interval = '1h';
+        $period = 14;
+
+        $rsi = $this->getRsiValue($interval,$period);
+
+        try {
+            ScheduleRsiGrouper::dispatch($rsi,$interval, $period, $price);
+        } catch (\Exception $e) {
+            info('Error RSI -'. $e->getMessage());
+        }
 
 
         $tb_price = Price::where('created_at',now()->startOfHour())->first();
