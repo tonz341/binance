@@ -80,7 +80,7 @@ class TradeJobRsi implements ShouldQueue
                 }
             } else {
                 $available_balance = (float)$balances[$wallet_configuration['sell_currency']]['available'];
-                if($available_balance < $this->schedule->amount) {
+                if($available_balance < ($this->schedule->uncommitted_shares / 100000)) {
                     info('Not enough balance');
                     $this->schedule->notes = 'Balance is not enough';
                     $this->schedule->status = 0;
