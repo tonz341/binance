@@ -105,7 +105,7 @@ class TradeJobRsi implements ShouldQueue
                 $order = $api->marketBuy($this->schedule->symbol, $final_qty);
 
                 $this->schedule->average_price = $price;
-                $this->schedule->uncommitted_shares = $final_qty;
+                $this->schedule->uncommitted_shares = ($final_qty * 100000);
 
                 if($this->schedule->auto_cyle) {
                     $this->schedule->side = 'sell';
@@ -117,13 +117,13 @@ class TradeJobRsi implements ShouldQueue
 
                 $percentage =  100 - (($this->schedule->average_price / $price) * 100); // get percentage difference vs price in window hour last time
                 if($percentage < $this->schedule->target_sell) {
-//                    dont do anything just add cooldown
+//                    dont do anything
                     $this->schedule->next_schedule_at = now()->addMinutes(5);
                     $this->schedule->update();
                     return;
                 }
 
-                $order = $api->marketSell($this->schedule->symbol, $this->schedule->uncomitted_shares);
+                $order = $api->marketSell($this->schedule->symbol, ($this->schedule->uncomitted_shares / 100000));
 
                 if($this->schedule->auto_cyle) { // RESET schedule
                     $this->schedule->side = 'buy';
