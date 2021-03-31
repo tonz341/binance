@@ -105,7 +105,13 @@ class TradeJobRsi implements ShouldQueue
                 $order = $api->marketBuy($this->schedule->symbol, $final_qty);
 
                 $this->schedule->average_price = $price;
-                $this->schedule->uncommitted_shares = ($final_qty * 100000);
+
+
+                try {
+                    $this->schedule->uncommitted_shares =  (($final_qty - ($final_qty * 0.001)) * 100000 ); // minus commision fee 0.001%
+                } catch (\Exception $e) {
+                    info('RSI error buy - ' .$e->getMessage());
+                }
 
                 if($this->schedule->auto_cyle) {
                     $this->schedule->side = 'sell';
