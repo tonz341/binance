@@ -5,7 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><strong>[BTD]</strong> Create</div>
+                <div class="card-header"><strong>[BTD]</strong> Create
+                     <span class="float-right">
+                        <small>
+                            <strong>BTC:</strong>  {{ \Illuminate\Support\Facades\Cache::get('BTCUSDC') }} &nbsp; | &nbsp;
+                            <strong>RSI-1h-14: </strong>  {{ \Illuminate\Support\Facades\Cache::get('RSI_1D_14') }}  &nbsp;
+                        </small>
+                     </span>
+                </div>
                 <div class="card-body">
                     <form action="/schedule-btd/set" method="post">
                          {{ csrf_field()  }}

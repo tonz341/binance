@@ -43,6 +43,10 @@ class ScheduleRsiGrouper implements ShouldQueue
             ->where('rsi_interval',$this->interval)
             ->where('type','RSI')
             ->where('status',1)
+            ->where(function($q){
+                $q->where('next_schedule_at','<',now())
+                    ->orWhereNull('next_schedule_at');
+            })
             ->limit(20)
             ->get();
 

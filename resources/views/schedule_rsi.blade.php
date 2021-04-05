@@ -6,7 +6,6 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"><strong>[AUTO-RSI]</strong> Create
-
                     <span class="float-right">
                         <small>
                           <strong>BTC:</strong>  {{ $current['price'] }} &nbsp; | &nbsp;
@@ -123,7 +122,7 @@
                                     <td>{{ $schedule->rsi_interval }} </td>
                                     <td>{{ $schedule->rsi }} </td>
                                     <td>{{ $schedule->average_price }}
-                                        @if($schedule->status && $schedule->side == 'buy')
+                                        @if($schedule->status && $schedule->side == 'sell')
                                             @php $diff =  round(100 - ( $schedule->average_price / $current['price']  * 100),2) @endphp
                                             <small style="color: {{ $diff < 0 ? 'red' : 'green'  }}">
                                                 ({{ $diff }})%
