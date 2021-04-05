@@ -9,6 +9,7 @@ use Binance;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class ScheduleRsiController extends Controller
 {
@@ -16,9 +17,12 @@ class ScheduleRsiController extends Controller
     public function index(){
         $schedules = auth()->user()->schedules_rsi;
 
-        $rsi = Price::latest()->first();
+        $current = [
+            'rsi_14_1d' =>  Cache::get('RSI_1D_14'),
+            'price' =>  Cache::get('BTCUSDC')
+        ];
 
-        return view('schedule_rsi', ['schedules' => $schedules, 'rsi' => $rsi]);
+        return view('schedule_rsi', ['schedules' => $schedules, 'current' => $current]);
     }
 
     public function set(Request $request){

@@ -65,9 +65,32 @@ class TradeJobRsi implements ShouldQueue
         try {
             $api = new Binance\API($api,$secret);
             $ticker = $api->prices(); // Make sure you have an updated ticker object for this to work
-            $balances = $api->balances($ticker);
-
             $wallet_configuration = config('wallet')[$this->schedule->symbol]; // bring up wallet configuration
+
+            //if balance is enough, then continue
+            $price = $api->price($this->schedule->symbol);
+            $final_qty = $this->getFinalQty($wallet_configuration, $price);
+
+
+            if($this->schedule->side == 'buy') {
+                if ($this->rsi > $this->schedule->rsi) {
+//                    dont do anything just add cooldown
+                    $this->schedule->next_schedule_at = now()->addMinutes(5);
+                    $this->schedule->update();
+                    return;
+                }
+            } else {
+                $percentage =  100 - (($this->schedule->average_price / $price) * 100); // get percentage difference vs price in window hour last time
+                if($percentage < $this->schedule->target_sell) {
+//                    dont do anything
+                    $this->schedule->next_schedule_at = now()->addMinutes(5);
+                    $this->schedule->update();
+                    return;
+                }
+            }
+
+
+            $balances = $api->balances($ticker);
 
             if($this->schedule->side == 'buy') {
                 $available_balance = (float)$balances[$wallet_configuration['buy_currency']]['available'];
@@ -89,23 +112,13 @@ class TradeJobRsi implements ShouldQueue
                 }
             }
 
-            //if balance is enough, then continue
-            $price = $api->price($this->schedule->symbol);
-            $final_qty = $this->getFinalQty($wallet_configuration, $price);
+
 
             if($this->schedule->side == 'buy') {
-
-                if($this->rsi > $this->schedule->rsi) {
-//                    dont do anything just add cooldown
-                    $this->schedule->next_schedule_at = now()->addMinutes(5);
-                    $this->schedule->update();
-                    return;
-                }
 
                 $order = $api->marketBuy($this->schedule->symbol, $final_qty);
 
                 $this->schedule->average_price = $price;
-
 
                 try {
                     $this->schedule->uncommitted_shares =  (($final_qty - ($final_qty * 0.001)) * 100000 ); // minus commision fee 0.001%
@@ -120,14 +133,6 @@ class TradeJobRsi implements ShouldQueue
                 }
 
             } else {
-
-                $percentage =  100 - (($this->schedule->average_price / $price) * 100); // get percentage difference vs price in window hour last time
-                if($percentage < $this->schedule->target_sell) {
-//                    dont do anything
-                    $this->schedule->next_schedule_at = now()->addMinutes(5);
-                    $this->schedule->update();
-                    return;
-                }
 
                 $order = $api->marketSell($this->schedule->symbol, ($this->schedule->uncomitted_shares / 100000));
 

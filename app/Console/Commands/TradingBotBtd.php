@@ -12,6 +12,7 @@ use Illuminate\Console\Command;
 
 use App\Schedule;
 use Binance;
+use Illuminate\Support\Facades\Cache;
 
 class TradingBotBtd extends Command
 {
@@ -74,6 +75,10 @@ class TradingBotBtd extends Command
 
         try {
             ScheduleRsiGrouper::dispatch($rsi,$interval, $period, $price);
+
+            Cache::store('file')->put('BTCUSDC',$price); // 10 Minutes
+            Cache::store('file')->put('RSI_1D_14',$rsi); // 10 Minutes
+
         } catch (\Exception $e) {
             info('Error RSI -'. $e->getMessage());
         }

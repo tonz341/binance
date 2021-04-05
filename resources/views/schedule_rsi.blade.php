@@ -9,9 +9,8 @@
 
                     <span class="float-right">
                         <small>
-                          <strong>BTC:</strong>  {{ $rsi->price }} &nbsp; | &nbsp;
-                          <strong>RSI-1h-14: </strong>  {{ $rsi->rsi_14_1d }}  &nbsp; | &nbsp;
-                          <strong>Last: </strong>  {{ $rsi->created_at }}
+                          <strong>BTC:</strong>  {{ $current['price'] }} &nbsp; | &nbsp;
+                          <strong>RSI-1h-14: </strong>  {{ $current['rsi_14_1d'] }}  &nbsp;
                         </small>
                     </span>
 
@@ -123,8 +122,16 @@
                                     <td>{{ $schedule->rsi_period }} </td>
                                     <td>{{ $schedule->rsi_interval }} </td>
                                     <td>{{ $schedule->rsi }} </td>
-                                    <td>{{ $schedule->average_price }}</td>
-                                    <td>{{ $schedule->target_sell }}%</td>
+                                    <td>{{ $schedule->average_price }}
+                                        @if($schedule->status && $schedule->side == 'buy')
+                                            @php $diff =  round(100 - ( $schedule->average_price / $current['price']  * 100),2) @endphp
+                                            <small style="color: {{ $diff < 0 ? 'red' : 'green'  }}">
+                                                ({{ $diff }})%
+                                            </small>
+                                        @endif
+                                    </td>
+                                    <td>{{ $schedule->target_sell }}%
+                                    </td>
                                     <td>
                                         @if($schedule->status)
                                             Active
