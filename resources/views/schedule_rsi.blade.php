@@ -36,8 +36,8 @@
                             <div class="col-sm">
                                 <label for="auto_cycle "> Auto-Cycle </label> <br>
                                 <select class="form-control" name="auto_cycle" id="auto_cycle">
-                                    <option value="0" selected> No </option>
-                                    <option value="1"> Yes </option>
+                                    <option value="0" > No </option>
+                                    <option value="1" selected> Yes </option>
                                 </select>
                             </div>
 
@@ -72,7 +72,7 @@
                             <div class="col-sm" style="border-left: 1px solid black;">
                                 <label for="target_sell "> Sell-on </label> <br>
                                 <select class="form-control" name="target_sell" id="target_sell">
-                                    @for ($i = 5 ; $i < 100; $i = $i + 5)
+                                    @for ($i = 3 ; $i < 100; $i = $i + 1)
                                         <option value="{{ $i }}"> {{ $i }}%</option>
                                     @endfor
                                 </select>
