@@ -10,6 +10,7 @@ use App\User;
 use Binance;
 use Carbon\Carbon;
 use DOMDocument;
+use DOMXPath;
 use Endroid\QrCode\Writer\PngWriter;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -20,144 +21,133 @@ use Ofcold\QrCode\Facades\QrCode;
 class TradeController extends Controller
 {
 
-    protected $user;
-    protected $schedule;
+
+    protected $client;
+
+    public function __construct()
+    {
+        $this->client  = new Client();
+    }
 
     public function set(){
         return view('schedule');
-
     }
-    public function test()
-    {
 
-//        ContentPlaceHolder1_hdnTotalSupply supply
-//        ContentPlaceHolder1_hdnSymbol symbol
-//        sparkholderscontainer holders
+    private function getHoldersCount($html){
 
-        
-        
-        $client  = new Client();
+        try {
+            $start = strpos($html,'id="ContentPlaceHolder1_tr_tokenHolders"');
+            $holders = substr("$html", $start);
 
-        $res = $client->get('https://bscscan.com/token/0xe6f3ec808b86ca1f891071ac759831bd9f833c4e');
+            $end = strpos($holders,'addresses');
 
+            $holders = substr("$holders", 0 ,$end);
+            $holders = substr("$holders", strpos($holders,'<div class="mr-3">') + (strlen('<div class="mr-3">') + 1));
+
+            return (int)$holders;
+        }  catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+
+    private function getTokenInfo($url){
+
+        $res = $this->client->get($url);
         $html = $res->getBody()->getContents();
 
-        dd($html);
+        try {
+
+            $decimal = substr($html, strpos($html,'Decimals:'));
+            $start = strpos($html,'property="og:description"');
+            $scrape = substr($html, $start);
+            $end = strpos($scrape,'/> <meta property="og:type"');
+            $scrape = substr($scrape, 0 ,$end);
+
+            $data = collect(explode(" ", $scrape))->unique()->values();
+            $decimal = (int)collect(explode("\n", substr($decimal, 0, strpos($decimal,'<hr class="hr-space">'))))[2];
+
+            return  [
+                'name' =>  $data[$data->search('Token', true) - 1],
+                'code' =>  $data[$data->search('Token', true) + 1],
+                'decimal' => $decimal,
+                'price_usd' => (double)preg_replace('/[^\d.]/', "",$data[$data->search('price', true) + 2]),
+                'total_supply' => (int)str_replace(",", "", $data[$data->search('supply', true) + 1]),
+                'holders' => (int)str_replace(",", "", $data[$data->search('holders', true) + 1]),
+            ];
 
 
-//        $inputs = $document->getElementById("ContentPlaceHolder1_hdnTotalSupply");
+        }  catch (\Exception $e) {
+            return 0;
+        }
+    }
 
+    private function client($url){
 
-//        dd($inputs);
+        try {
+            $res = $this->client->get($url);
+            $html = \GuzzleHttp\json_decode($res->getBody()->getContents());
 
-
-
-        $product = [
-            'name' => 'test_product',
-            'wallet_address' => 'tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy',
-            'price' => 5,
-            'symbol' => 'xtz',
-        ];
-
-        if($product['symbol'] == 'xtz') {
-
-            $user = User::whereNotNull('binance_api_key')->whereNotNull('binance_secret')->first();
-            $api = $user->binance_api_key ? decrypt($user->binance_api_key) : null;
-            $secret = $user->binance_secret ? decrypt($user->binance_secret) : null;
-
-            $api = new Binance\API($api,$secret);
-            $product['current_price_on_usd'] = $product['price'] * (double)$api->price('XTZUSDT');
-
-        } else {
-            $product['current_price_on_usd'] = $product['price'];
+            return (double)($html->result);
+        } catch (\Exception $e) {
+            return 0;
         }
 
+    }
 
-        echo "Name:". $product['name'] . "<br>" . "Price:". $product['price'] . $product['symbol'].  "<br>" .  "USD price:". $product['current_price_on_usd'] ."<hr>";
+    public function test(Request $request)
+    {
 
-        $string = 'tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy';
-        $tes  = QrCode::encoding('UTF-8')->generate($string);
-        echo '<br> <br> <br> <br> This is tezos only address (direct) <br>' . $tes . '<br>';
-        echo $string . "<hr>";
+        echo '<form action="/sample" type="GET"><input type="text" placeholder="Token address" name="address" /><button type="submit">Search</button></form>';
 
-        $string = 'tezos:tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy';
-        $tes  = QrCode::encoding('UTF-8')->generate($string);
-        echo '<br> <br> <br> <br> This is tezos only address <br>' . $tes . '<br>';
-        echo $string . "<hr>";
-
-        $string = 'tezos:tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy?amount='.$product['price'];
-        $tes  = QrCode::encoding('UTF-8')->generate($string);
-        echo '<br> <br> <br> <br> This is tezos with amount <br>' . $tes . '<br>';
-        echo $string . "<hr>";
+        echo '<form action="/sample" type="GET"><input type="hidden" placeholder="Token address" name="address" value="0xe6f3ec808b86ca1f891071ac759831bd9f833c4e" /><button type="submit">BANA</button></form>';
+        echo '<form action="/sample" type="GET"><input type="hidden" placeholder="Token address" name="address" value="0x2170ed0880ac9a755fd29b2688956bd959f933f8" /><button type="submit">ETC</button></form>';
+        echo '<form action="/sample" type="GET"><input type="hidden" placeholder="Token address" name="address" value="0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c" /><button type="submit">BTC</button></form>';
+        echo '<form action="/sample" type="GET"><input type="hidden" placeholder="Token address" name="address" value="0x16939ef78684453bfdfb47825f8a5f714f12623a" /><button type="submit">XTZ</button></form>';
 
 
-        $string = 'bitcoin:19HSBchayeEiaNdHJWqTycbUSLPuunhqUM?amount='.$product['price'];
-        $tes  = QrCode::encoding('UTF-8')->generate($string);
+        if(!isset($request->address)) {
+            return;
+        }
 
-        echo '<br> <br> <br> <br> This is bitcoin with amount <br>' . $tes . '<br>';
-        echo $string . "<hr>";
-
-        $string = '19HSBchayeEiaNdHJWqTycbUSLPuunhqUM';
-        $tes  = QrCode::encoding('UTF-8')->generate($string);
-
-        echo '<br> <br> <br> <br> This is bitcoin only address (direct) <br>' . $tes . '<br>';
-        echo $string . "<hr>";
-
-
-//        dd('done');
-
-//        $tes  = QrCode::BTC('tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy', 0.334);
-
-
-
-//        echo '<center>' . $tes . '</center>';
-
-//        dd('done');
-
-
-
-//        Cache::store('file')->put('BTCUSDC',57243.55); // 10 Minutes
-//        Cache::store('file')->put('RSI_1D_14',35.88); // 10 Minutes
+        $api = 'IVSGGH6SA13NE9PXJ7DAIBN77JBBEY9H23';
+        $token = $request->address;
 //
-//        dd( $value = Cache::get('BTCUSDC'));
-//
-////        dd(0.00229100 - 0.00000229);
-//        dd((0.00229100 - (0.00229100 * 0.001)) * 100000);
-//
-//        dd(0.00229100 -  (0.00229100 * 0.0001));
-//
-//        dd(100 - ( (0.00000229 / 0.00229100) * 100));
-//
-//        dd(0.00229100 - 0.00000229);
-//
-//        dd( (0.00229100 * 0.009));
+        $url = 'https://bscscan.com/token/'.$token.'#balances';
+        $info = $this->getTokenInfo($url);
 
-//        dd((float)0.00228921 - 0.002291);
+        if($info === 0) {
+            return response('Token address is invalid', 400);
+        }
 
-//        $product = [
-//            'name' => 'test_product',
-//            'wallet_address' => 'tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy',
-//            'price' => 5,
-//            'symbol' => 'xtz',
-//        ];
-//
+        $test = [
+            'name' => $info['name'],
+            'code' => $info['code'],
+            'decimal' => $decimal = $info['decimal'],
+            'max_supply' => $max_supply = $info['total_supply'],
+            'circ_supply' => $circ_supply = ($this->client('https://api.bscscan.com/api?module=stats&action=tokenCsupply&contractaddress='.$token.'&apikey='.$api) / (10 ** $decimal)),
+            'free' => $max_supply - $circ_supply,
+            'holders' => $info['holders'],
+            'price_to_usd' => $info['price_usd'],
+            'max_supply_amount' => $max_supply * $info['price_usd'],
+            'circ_supply_amount' => $circ_supply * $info['price_usd'],
+        ];
 
+        echo "<hr />";
+        echo "<p>Name:".$test['name']."</p>";
+        echo "<p>Code:".$test['code']."</p>";
+        echo "<p>Decimal:".$test['decimal']."</p>";
+        echo "<p>Max Supply:".$test['max_supply']."</p>";
+        echo "<p>Circulation Supply:".$test['circ_supply']."</p>";
+        echo "<p>Holders:".$test['holders']."</p>";
+        echo "<p>Price to USD: $".$test['price_to_usd']."</p>";
+        echo "<p>Max Supply Amount:  <strong>".$test['max_supply_amount']." </strong></p>";
+        echo "<p>Circulation Supply Amount: <strong>".$test['circ_supply_amount']."</strong></p>";
 
+    }
 
-//        dd($product);
-//
-//
-//        $ticker = $api->prices(); // Make sure you have an updated ticker object for this to work
-//        $balances = $api->balances($ticker);
-//
-//        $wallet_configuration = config('wallet')['BTCUSDC']; // bring up wallet configuration
-//
-//        $available_balance = (float)$balances[$wallet_configuration['sell_currency']]['available'];
-//
-//
-//        dd($available_balance);
-
-
+    private function getPriceToUsd($url){
+        return $url;
     }
 
 
