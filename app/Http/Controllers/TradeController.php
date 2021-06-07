@@ -9,6 +9,7 @@ use App\Schedule;
 use App\User;
 use Binance;
 use Carbon\Carbon;
+use DOMDocument;
 use Endroid\QrCode\Writer\PngWriter;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -28,6 +29,28 @@ class TradeController extends Controller
     }
     public function test()
     {
+
+//        ContentPlaceHolder1_hdnTotalSupply supply
+//        ContentPlaceHolder1_hdnSymbol symbol
+//        sparkholderscontainer holders
+
+        
+        
+        $client  = new Client();
+
+        $res = $client->get('https://bscscan.com/token/0xe6f3ec808b86ca1f891071ac759831bd9f833c4e');
+
+        $html = $res->getBody()->getContents();
+
+        dd($html);
+
+
+//        $inputs = $document->getElementById("ContentPlaceHolder1_hdnTotalSupply");
+
+
+//        dd($inputs);
+
+
 
         $product = [
             'name' => 'test_product',
@@ -54,17 +77,17 @@ class TradeController extends Controller
 
         $string = 'tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy';
         $tes  = QrCode::encoding('UTF-8')->generate($string);
-        echo '<br> <br> <br> <br> This is tesuz only address (direct) <br>' . $tes . '<br>';
+        echo '<br> <br> <br> <br> This is tezos only address (direct) <br>' . $tes . '<br>';
         echo $string . "<hr>";
 
-        $string = 'tesuz:tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy';
+        $string = 'tezos:tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy';
         $tes  = QrCode::encoding('UTF-8')->generate($string);
-        echo '<br> <br> <br> <br> This is tesuz only address <br>' . $tes . '<br>';
+        echo '<br> <br> <br> <br> This is tezos only address <br>' . $tes . '<br>';
         echo $string . "<hr>";
 
-        $string = 'tesuz:tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy?amount='.$product['price'];
+        $string = 'tezos:tz1YdUMFfwMbr6n91kyWASe9DyJA1LuhtrKy?amount='.$product['price'];
         $tes  = QrCode::encoding('UTF-8')->generate($string);
-        echo '<br> <br> <br> <br> This is tesuz with amount <br>' . $tes . '<br>';
+        echo '<br> <br> <br> <br> This is tezos with amount <br>' . $tes . '<br>';
         echo $string . "<hr>";
 
 
