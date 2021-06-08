@@ -157,7 +157,7 @@ class TradeController extends Controller
 //            'max_supply_amount' => $max_supply * $info['price_usd'],
 //            'circ_supply_amount' => $circ_supply * $info['price_usd'],
             'burned_tokens' => number_format($burned = 1000000000 - $max_supply),
-            'burned_tokens_percentage' => number_format((float)($burned / 1000000000) * 100, 2, '.', '').'%',
+            'burned_tokens_percentage' => number_format((float)($burned / 1000000000) * 100, 5, '.', '').'%',
             'max_supply_str' => $this->number_format_short($max_supply),
             'circ_supply_str' => $this->number_format_short($circ_supply),
 
