@@ -20,8 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/prices/', 'HomeController@prices')->name('price');
 
-Route::get('/sample/', 'TradeController@test')->name('test');
-Route::get('/sample/api', array('middleware' => 'banacors', 'uses' => 'TradeController@api'))->name('test.api');
+Route::get('/bana/', 'TradeController@test')->name('test');
+Route::get('/bana/api', array('middleware' => 'banacors', 'uses' => 'TradeController@bana'))->name('bana.api');
 
 
 Route::middleware(['auth'])->group(function () {

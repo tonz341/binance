@@ -130,11 +130,13 @@ class TradeController extends Controller
 
     private function core($request){
 
-        if(!isset($request->address)) {
-            $token = '0xe6f3ec808b86ca1f891071ac759831bd9f833c4e';
-        } else {
-            $token = $request->address;
-        }
+//        if(!isset($request->address)) {
+//            $token = '0xe6f3ec808b86ca1f891071ac759831bd9f833c4e';
+//        } else {
+//            $token = $request->address;
+//        }
+
+        $token = '0xe6f3ec808b86ca1f891071ac759831bd9f833c4e';
 
         $api = 'IVSGGH6SA13NE9PXJ7DAIBN77JBBEY9H23';
 //
@@ -145,7 +147,7 @@ class TradeController extends Controller
             return response('Token address is invalid', 400);
         }
 
-        $test = [
+        $data = [
             'name' => $info['name'],
             'code' => $info['code'],
             'decimal' => $decimal = $info['decimal'],
@@ -163,10 +165,16 @@ class TradeController extends Controller
 
         ];
 
-        return $test;
+
+        Cache::store('file')->put('bana', $data, 5);
+        return $data;
     }
 
-    public function api(Request $request){
+    public function bana(Request $request){
+        $data = Cache::get('bana');
+        if($data) {
+            return response($data, 200);
+        }
         return response($this->core($request), 200);
     }
 
