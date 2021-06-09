@@ -21,8 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/prices/', 'HomeController@prices')->name('price');
 
 Route::get('/sample/', 'TradeController@test')->name('test');
-Route::get('/sample/api', 'TradeController@api')->name('test.api');
-
+Route::get('/sample/api', array('middleware' => 'banacors', 'uses' => 'TradeController@api'))->name('test.api');
 
 
 Route::middleware(['auth'])->group(function () {
