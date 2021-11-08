@@ -35,7 +35,7 @@
 
                             <div class="col-sm">
                                 <label for="amount "> Amount </label> <br>
-                                <input class="form-control" type="number" value="" name="amount" required>
+                                <input class="form-control" type="number" step="0.000000001" value="" name="amount" required>
                             </div>
 
                             <div class="col-sm">

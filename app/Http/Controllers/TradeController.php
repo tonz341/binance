@@ -137,7 +137,6 @@ class TradeController extends Controller
 //        }
 
         $token = '0xe6f3ec808b86ca1f891071ac759831bd9f833c4e';
-
         $api = 'IVSGGH6SA13NE9PXJ7DAIBN77JBBEY9H23';
 //
         $url = 'https://bscscan.com/token/'.$token.'#balances';
