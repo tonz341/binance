@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/buy', 'TradeController@buy')->name('buy');
+
+    Route::get('/pse', 'PseController@index')->name('pse_index');
 });
 
 

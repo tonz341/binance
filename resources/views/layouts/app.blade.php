@@ -25,6 +25,25 @@
                font-size: 9px;
            }
         }
+
+        .no-scroll {
+            -ms-overflow-style: none; /* for Internet Explorer, Edge */
+            scrollbar-width: none; /* for Firefox */
+            overflow-y: scroll;
+            height: 80vh;
+        }
+
+        .no-scroll::-webkit-scrollbar {
+            display: none; /* for Chrome, Safari, and Opera */
+        }
+
+        .no-padding {
+            padding: 0px !important;
+            padding-bottom: 5px !important;
+        }
+
+
+
     </style>
 
 </head>
