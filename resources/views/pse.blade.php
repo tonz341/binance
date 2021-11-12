@@ -132,15 +132,13 @@
 <script>
 
     var x = 0;
-//    document.getElementById("reload_counter").innerHTML  = 'test';
 
     setTimeout(function(){
         location.reload();
     },60000)
 
-
     setInterval(function(){
-        document.getElementById("reload_counter").innerHTML  = 60 - x;
+        document.getElementById("reload_counter").innerHTML  = 30 - x;
         x++;
     },1000)
 
