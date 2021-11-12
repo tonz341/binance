@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-6">
                                 <p><strong>Holds</strong></p>
                                 <div class="row">
                                     @foreach($stocks['holds'] as $stock)
@@ -60,7 +60,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col-5">
+                            <div class="col-6">
                                 <div class="row">
                                     <div class="col-4">
                                         <p><strong>Gainers</strong></p>
