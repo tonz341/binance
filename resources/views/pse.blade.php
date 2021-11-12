@@ -132,13 +132,14 @@
 <script>
 
     var x = 0;
+    var time = 30
 
     setTimeout(function(){
         location.reload();
-    },60000)
+    },time * 1000)
 
     setInterval(function(){
-        document.getElementById("reload_counter").innerHTML  = 30 - x;
+        document.getElementById("reload_counter").innerHTML  = (time - x);
         x++;
     },1000)
 
